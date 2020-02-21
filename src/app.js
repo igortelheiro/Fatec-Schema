@@ -6,12 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
 import AppBar from './components/app-bar';
 import Welcome from './components/welcome';
+import Login from './components/login';
 
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            pageRouted: Welcome
+            pageRouted: Login //(first_entry ? Welcome : Login) //{{{{{{{TODO}}}}}}}
         };
     }
 

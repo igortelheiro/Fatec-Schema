@@ -56,7 +56,7 @@ export default class AppBar extends React.Component{
             paddingBottom: 10,
             height: 100,
             color: "#f5f5f5",
-            backgroundColor: "#494440",
+            backgroundColor: "#4169E1",
             display: "flex",
             alignItems: "center",
             userSelect: "none",
