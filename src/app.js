@@ -4,33 +4,47 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
-import AppBar from './components/app-bar';
+import AppBar from './components/AppBar/app-bar';
 import Welcome from './components/welcome';
-import Login from './components/login';
+import Login from './components/Login/login';
+
+const fs = require('fs')
+const fName = "./schema.ini"
 
 export default class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            pageRouted: Login //(first_entry ? Welcome : Login) //{{{{{{{TODO}}}}}}}
+            currentPage: Login,
+            logged: false
         };
+
+        fs.exists(fName, (exists) => {
+            if (!exists){
+                this.setState({ currentPage: Welcome })
+                fs.writeFileSync(fName, "[files checked]")
+                console.log(fName + " criado com sucesso!")
+            }
+        });
     }
 
     routePage = (page) => {
-        this.setState({pageRouted: page})
+        this.setState({currentPage: page})
     }
 
     render() {
+        const CurrentPage = this.state.currentPage
+
         return (
             <div>
                 <Dialog fullScreen={Boolean("true")} open={Boolean("true")}>
                     <DialogTitle style={{padding: 0}}>
-                        <AppBar mainApp={this}></AppBar>
+                        <AppBar mainApp={this} />
                     </DialogTitle>
                     
                     <DialogContent className={'mainContent'}>
                         <Router>
-                            <Route component={this.state.pageRouted}/>
+                            <Route component={() => <CurrentPage mainApp={this} />} />
                         </Router>
                     </DialogContent>
                 </Dialog>

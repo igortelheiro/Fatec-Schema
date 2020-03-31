@@ -74,16 +74,18 @@ export default class AppBar extends React.Component{
         return ( 
             <div style={ appBarStyle }>                
                 <AppMenu mainApp={this.state.mainApp}/>
-                <h1 style={ appH1 }>Reactron</h1>
+                <h1 style={ appH1 }> Schema </h1>
 
                 <IconButton color="inherit" size="small" style={ appButton  }
                     onClick={() => { window.minimize() } }>
                     <Minimize />
                 </IconButton>
+
                 <IconButton color="inherit" size="small" style={ appButton }
                     onClick={() => { this.maximizeButton() } }>
                     { this.state.maximizeIcon }
                 </IconButton>
+                
                 <IconButton color="inherit" size="small" style={ appButton }
                     onClick={() => { window.close() } }>
                     <Close />
