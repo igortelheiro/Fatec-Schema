@@ -10,16 +10,14 @@ import Grid from '@material-ui/core/Grid'
 import MenuButton from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import LoginIcon from '@material-ui/icons/LockOpen'
-import ProfileIcon from '@material-ui/icons/AccountBox';
 import GameIcon from '@material-ui/icons/PlayArrow';
 import RankIcon from '@material-ui/icons/SupervisorAccount';
 import InfoIcon from '@material-ui/icons/Info';
 import ConfigIcon from '@material-ui/icons/Settings';
-import Exit from '@material-ui/icons/ExitToApp'
+import Exit from '@material-ui/icons/ExitToApp';
 
 import Welcome from '../welcome';
 import Login from '../Login/login';
-import Profile from '../Profile/profile';
 import About from '../about';
 import Game from '../game';
 import Ranking from '../ranking';
@@ -44,8 +42,7 @@ export default function AppMenu(props) {
     WebkitAppRegion: "no-drag"
   }
   const menuIcon = {
-    marginLeft: 'auto',
-    padding: '0 0 0 6px'
+    padding: '0 15px 0 0'
   }
 
   return (
@@ -66,15 +63,14 @@ export default function AppMenu(props) {
         onClose={handleClose}
       >
         
-        <MenuItem onClick={() => {handleClickOpt(Welcome)}}> Bem-vindo <HomeIcon style={ menuIcon }/></MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Login)}}> Login <LoginIcon style={ menuIcon }/></MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Profile)}}> Profile<ProfileIcon style={ menuIcon }/></MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Game)}}> Game <GameIcon style={ menuIcon }/></MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Ranking)}}> Ranking <RankIcon style={ menuIcon }/> </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(Welcome)}}> <HomeIcon style={ menuIcon }/> Bem-Vindo </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(Login)}}> <LoginIcon style={ menuIcon }/> Login </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(Game)}}> <GameIcon style={ menuIcon }/> Jogo </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(Ranking)}}> <RankIcon style={ menuIcon }/> Ranking </MenuItem>
         <Divider />
-        <MenuItem onClick={() => {handleClickOpt(About)}}> Sobre... <InfoIcon style={ menuIcon }/></MenuItem>
-        <MenuItem onClick={() => {}}> Configurações <ConfigIcon style={ menuIcon }/> </MenuItem>
-        <MenuItem onClick={() => {}}> Sair <Exit style={ menuIcon }/> </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(About)}}> <InfoIcon style={ menuIcon }/> Sobre... </MenuItem>
+        {/*   <MenuItem onClick={() => {}}> Config <ConfigIcon style={ menuIcon }/> </MenuItem>   */}
+        <MenuItem onClick={() => {}}> <Exit style={ menuIcon }/> Sair </MenuItem>
         
       </Menu>
     </div>

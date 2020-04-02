@@ -1,6 +1,5 @@
 import React from 'react';
-import MsgDialog from '../components/dialog'
-import { link } from 'fs';
+import MsgDialog from './Tools/msgDialog'
 
 export default class About extends React.Component {
   constructor(props){

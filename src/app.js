@@ -16,8 +16,11 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             currentPage: Login,
-            logged: false
-        };
+            auth: true
+        }
+
+        this.routePage = this.routePage.bind(this)
+        this.setAuth = this.setAuth.bind(this)
 
         fs.exists(fName, (exists) => {
             if (!exists){
@@ -29,7 +32,11 @@ export default class App extends React.Component {
     }
 
     routePage = (page) => {
-        this.setState({currentPage: page})
+        this.setState({ currentPage: page })
+    }
+
+    setAuth = (bool) => {
+        this.setState({ auth: bool })
     }
 
     render() {
@@ -39,12 +46,21 @@ export default class App extends React.Component {
             <div>
                 <Dialog fullScreen={Boolean("true")} open={Boolean("true")}>
                     <DialogTitle style={{padding: 0}}>
-                        <AppBar mainApp={this} />
+                        <AppBar
+                            mainApp={this}
+                            auth={this.state.auth}
+                        />
                     </DialogTitle>
                     
                     <DialogContent className={'mainContent'}>
                         <Router>
-                            <Route component={() => <CurrentPage mainApp={this} />} />
+                            <Route component={() =>
+                                <CurrentPage 
+                                    mainApp={this}
+                                    auth={this.state.auth}
+                                    setAuth={this.setAuth}
+                                />}
+                            />
                         </Router>
                     </DialogContent>
                 </Dialog>

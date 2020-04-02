@@ -8,9 +8,10 @@ import { DatePicker } from '@material-ui/pickers'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import moment from 'moment'
-import MsgDialog from '../Tools/dialog'
+import MsgDialog from '../Tools/msgDialog'
 import Filter from 'bad-words'
 import RouterButton from '../Tools/routerButton'
+import Badwords from './badwords'
 
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Email from '@material-ui/icons/Mail'
@@ -137,8 +138,7 @@ export default class Register extends React.Component{
                 //Calling BadWords Filter
                 const filter = new Filter({ placeHolder: 'x' })
                 //Adding new BadWords
-                let badwords = ['porcodio', 'piru', 'corno', 'viado', 'piroca']
-                filter.addWords(...badwords)
+                filter.addWords(...Badwords)
                 //Cleaning the original input
                 const checkedName = filter.clean(nameField)
 
@@ -283,7 +283,7 @@ export default class Register extends React.Component{
                     id="birthday"
                     openTo="year"
                     format="dd/MM/yyyy" 
-                    label="Data de Nascimento"
+                    label="data de nascimento"
                     views={["year", "month", "date"]}
                     value={this.state.birthday}
                     onChange={date => this.onDateChange(date)}

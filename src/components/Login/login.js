@@ -82,6 +82,7 @@ export default class Login extends React.Component{
 
         
         <RouterButton mainApp={this.props.mainApp} txt={"Ainda não possui uma conta?"} page={Register} />
+        <AppButton onClick={() => this.props.setAuth(!this.props.auth)}>Toogle Auth</AppButton>
       </div>
     )
   }
