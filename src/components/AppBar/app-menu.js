@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Menu from '@material-ui/core/Menu';
@@ -14,16 +14,18 @@ import GameIcon from '@material-ui/icons/PlayArrow';
 import RankIcon from '@material-ui/icons/SupervisorAccount';
 import InfoIcon from '@material-ui/icons/Info';
 import ConfigIcon from '@material-ui/icons/Settings';
-import Exit from '@material-ui/icons/ExitToApp';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 
 import Welcome from '../welcome';
 import Login from '../Login/login';
 import About from '../about';
 import Game from '../game';
 import Ranking from '../ranking';
+import LoggedOut from '../Login/loggedOut'
 
 export default function AppMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { auth, cPage } = props
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -33,8 +35,19 @@ export default function AppMenu(props) {
     setAnchorEl(null);
   }
 
-  function handleClickOpt(page){
+  //Check auth before loading pages
+  useEffect(() => {
+    if (cPage == Game || cPage == Ranking) {
+      if (!auth) { routePage(LoggedOut) }
+    }
+  }, [auth, cPage])
+
+  function routePage(page) {
     props.mainApp.routePage(page)
+  }
+
+  function handleClickOpt(page){
+    routePage(page)
     handleClose()
   }
 
@@ -54,7 +67,7 @@ export default function AppMenu(props) {
               <MenuButton width="28"/>
           </IconButton>
       </Tooltip>
-      
+
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -62,7 +75,7 @@ export default function AppMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        
+
         <MenuItem onClick={() => {handleClickOpt(Welcome)}}> <HomeIcon style={ menuIcon }/> Bem-Vindo </MenuItem>
         <MenuItem onClick={() => {handleClickOpt(Login)}}> <LoginIcon style={ menuIcon }/> Login </MenuItem>
         <MenuItem onClick={() => {handleClickOpt(Game)}}> <GameIcon style={ menuIcon }/> Jogo </MenuItem>
@@ -70,8 +83,8 @@ export default function AppMenu(props) {
         <Divider />
         <MenuItem onClick={() => {handleClickOpt(About)}}> <InfoIcon style={ menuIcon }/> Sobre... </MenuItem>
         {/*   <MenuItem onClick={() => {}}> Config <ConfigIcon style={ menuIcon }/> </MenuItem>   */}
-        <MenuItem onClick={() => {}}> <Exit style={ menuIcon }/> Sair </MenuItem>
-        
+        <MenuItem onClick={() => {}}> <ExitIcon style={ menuIcon }/> Sair </MenuItem>
+
       </Menu>
     </div>
   );

@@ -48,14 +48,16 @@ export default class App extends React.Component {
                     <DialogTitle style={{padding: 0}}>
                         <AppBar
                             mainApp={this}
+                            cPage={this.state.currentPage}
                             auth={this.state.auth}
+                            setAuth={this.setAuth}
                         />
                     </DialogTitle>
-                    
+
                     <DialogContent className={'mainContent'}>
                         <Router>
                             <Route component={() =>
-                                <CurrentPage 
+                                <CurrentPage
                                     mainApp={this}
                                     auth={this.state.auth}
                                     setAuth={this.setAuth}

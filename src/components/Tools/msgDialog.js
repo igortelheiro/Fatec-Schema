@@ -21,7 +21,7 @@ export default class MsgDialog extends React.Component {
 
     closeDialog = () => {
         this.setState({ openDialog: false })
-        this.props.changeStatus()
+        this.props.handleClose()
     }
 
     render() {

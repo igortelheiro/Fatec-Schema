@@ -219,11 +219,8 @@ export default class Register extends React.Component{
 
   //Open Error Dialog
   onError = (title, description) => {
-    this.setState({ error: <MsgDialog title={title} message={description} changeStatus={this.endError}/> })
-  }
-  //Close Error Dialog
-  endError = () => {
-    this.setState({ error: null })
+    this.endError = this.setState({ error: null })
+    this.setState({ error: <MsgDialog title={title} message={description} handleClose={endError}/> })
   }
 
   render(){
