@@ -5,7 +5,6 @@ import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid'
 
 import MenuButton from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -19,12 +18,15 @@ import ExitIcon from '@material-ui/icons/ExitToApp';
 import Welcome from '../welcome';
 import Login from '../Login/login';
 import About from '../about';
-import Game from '../game';
+import Game from '../game'
+import Rules from '../rules';
 import Ranking from '../ranking';
 import LoggedOut from '../Login/loggedOut'
+import ConfDialog from '../Tools/confDialog'
 
 export default function AppMenu(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [ExitDialog, setExitDialog] = React.useState(null)
   const { auth, cPage } = props
 
   function handleClick(event) {
@@ -51,6 +53,19 @@ export default function AppMenu(props) {
     handleClose()
   }
 
+  function handleExit() {
+    const choice = (bool) => {if(bool) window.close()}
+    const handleClose = () => setExitDialog(null)
+    setExitDialog(
+      <ConfDialog
+        title="Fechar aplicativo"
+        msg="Tem certeza que deseja sair?"
+        setChoice={choice}
+        handleClose={handleClose}
+      />
+    )
+  }
+
   const appButton = {
     WebkitAppRegion: "no-drag"
   }
@@ -60,7 +75,7 @@ export default function AppMenu(props) {
 
   return (
     <div>
-      <Tooltip title="Menu principal">
+      <Tooltip title="Menu principal" arrow>
           <IconButton color="inherit" size="small" style={ appButton  }
               onClick={handleClick}
               >
@@ -75,17 +90,17 @@ export default function AppMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-
         <MenuItem onClick={() => {handleClickOpt(Welcome)}}> <HomeIcon style={ menuIcon }/> Bem-Vindo </MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Login)}}> <LoginIcon style={ menuIcon }/> Login </MenuItem>
-        <MenuItem onClick={() => {handleClickOpt(Game)}}> <GameIcon style={ menuIcon }/> Jogo </MenuItem>
+        {!auth && <MenuItem onClick={() => {handleClickOpt(Login)}}> <LoginIcon style={ menuIcon }/> Login </MenuItem>}
+        <MenuItem onClick={() => {handleClickOpt(Rules)}}> <GameIcon style={ menuIcon }/> O Jogo </MenuItem>
         <MenuItem onClick={() => {handleClickOpt(Ranking)}}> <RankIcon style={ menuIcon }/> Ranking </MenuItem>
         <Divider />
         <MenuItem onClick={() => {handleClickOpt(About)}}> <InfoIcon style={ menuIcon }/> Sobre... </MenuItem>
         {/*   <MenuItem onClick={() => {}}> Config <ConfigIcon style={ menuIcon }/> </MenuItem>   */}
-        <MenuItem onClick={() => {}}> <ExitIcon style={ menuIcon }/> Sair </MenuItem>
-
+        <MenuItem onClick={handleExit}> <ExitIcon style={ menuIcon }/> Sair </MenuItem>
       </Menu>
+
+      {ExitDialog}
     </div>
   );
 }

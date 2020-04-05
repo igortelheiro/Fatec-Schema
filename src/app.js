@@ -50,7 +50,6 @@ export default class App extends React.Component {
                             mainApp={this}
                             cPage={this.state.currentPage}
                             auth={this.state.auth}
-                            setAuth={this.setAuth}
                         />
                     </DialogTitle>
 
@@ -60,7 +59,6 @@ export default class App extends React.Component {
                                 <CurrentPage
                                     mainApp={this}
                                     auth={this.state.auth}
-                                    setAuth={this.setAuth}
                                 />}
                             />
                         </Router>

@@ -6,14 +6,21 @@ import CropSquare from '@material-ui/icons/CropSquare';
 import FilterNone from '@material-ui/icons/FilterNone';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import Avatar from '@material-ui/core/Avatar'
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ProfileIcon from '@material-ui/icons/AccountBoxRounded';
 import ConfigIcon from '@material-ui/icons/Settings';
 import ExitIcon from '@material-ui/icons/ExitToApp'
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import Tooltip from '@material-ui/core/Tooltip';
+import Divider from '@material-ui/core/Divider'
 
 import AppMenu from './app-menu';
 import Profile from '../Profile/profile'
 import ConfDialog from '../Tools/confDialog'
+import Welcome from '../welcome'
+import Game from '../game'
 //import Config from '../config'
 
 // Captura janela principal do Electron
@@ -31,6 +38,7 @@ export default class AppBar extends React.Component{
             anchorEl: null,
             accountMenuOpen: false,
             confDialog: null,
+            userAvatar: 'http://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2017/03/Avatar.jpg'
         }
     }
 
@@ -68,21 +76,38 @@ export default class AppBar extends React.Component{
 
         handleChoose = (page) => {
             this.handleClose()
-            this.props.mainApp.routePage(page)
+            this.routePage(page)
         }
 
+    routePage = (page) => {
+      this.props.mainApp.routePage(page)
+    }
+
     handleLoggout = () => {
-        const choice = (bool) => { this.props.setAuth(bool) }
+        const choice = (bool) => { this.props.mainApp.setAuth(!bool) }
         const handleClose = () => this.setState({ confDialog: null })
         this.setState({ confDialog:
             <ConfDialog
-                title="Loggout"
-                msg="Tem certeza que deseja sair?"
-                setChoice={choice}
-                handleClose={handleClose} />
-            }
-        )
+              title="Loggout"
+              msg="Tem certeza que deseja sair?"
+              setChoice={choice}
+              handleClose={handleClose}
+            />
+        })
         this.handleClose()
+    }
+
+    handleExit = () => {
+      const choice = (bool) => {if(bool) window.close()}
+      const handleClose = () => this.setState({ confDialog: null})
+      this.setState({confDialog:
+        <ConfDialog
+          title="Fechar aplicativo"
+          msg="Tem certeza que deseja sair?"
+          setChoice={choice}
+          handleClose={handleClose}
+        />
+      })
     }
 
     render(){
@@ -102,10 +127,10 @@ export default class AppBar extends React.Component{
           userSelect: "none",
       }
       const appButton = {
-          WebkitAppRegion: "no-drag"
+          WebkitAppRegion: "no-drag",
+          margin: 2
       }
       const appH1 = {
-          flexGrow: 1,
           margin: 0,
           marginLeft: 6,
           fontSize: 20
@@ -121,20 +146,43 @@ export default class AppBar extends React.Component{
             cPage={this.props.cPage}
             auth={this.state.auth}
           />
-          <h1 style={ appH1 }> Schema </h1>
+
+          <Divider orientation="vertical" />
+
+
+          <Tooltip title="Home" arrow>
+            <IconButton onClick={() => this.routePage(Welcome)} style={appButton} color="inherit" size="small">
+              <HomeIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Divider orientation="vertical" />
+
+          <Tooltip title="Clique para jogar!" arrow>
+            <IconButton onClick={() => this.routePage(Game)} style={appButton} color="inherit" size="small">
+              <h1 style={ appH1 }> Schema </h1>
+              <span style={{marginTop: 8}}><PlayIcon /></span>
+            </IconButton>
+          </Tooltip>
+
+          <div style={{flexGrow: 1}} />
 
           {this.state.auth && (
             <div>
-              <IconButton
-                style={ appButton }
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={(e) => this.handleMenu(e)}
-                color="inherit"
-              >
-                  <AccountCircle />
-              </IconButton>
+              <Tooltip title="Area do usuário" arrow>
+                <IconButton
+                  style={ appButton }
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={(e) => this.handleMenu(e)}
+                  color="inherit"
+                  size="small"
+                >
+                  <Avatar src={this.state.userAvatar} alt="user avatar" />
+                    {/* <AccountCircle /> */}
+                </IconButton>
+              </Tooltip>
               <Menu
                 id="menu-appbar"
                 anchorEl={this.state.anchorEl}
@@ -157,6 +205,9 @@ export default class AppBar extends React.Component{
             </div>
           )}
 
+          <Divider orientation="vertical" />
+
+
           <IconButton color="inherit" size="small" style={ appButton  }
               onClick={() => { window.minimize() } }>
               <Minimize />
@@ -168,7 +219,7 @@ export default class AppBar extends React.Component{
           </IconButton>
 
           <IconButton color="inherit" size="small" style={ appButton }
-              onClick={() => { window.close() } }>
+              onClick={this.handleExit}>
               <Close />
           </IconButton>
 

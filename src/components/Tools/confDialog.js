@@ -55,8 +55,8 @@ export default class ConfDialog extends Component {
               </DialogContent>
               <Divider />
               <DialogActions>
-                <Button onClick={() => this.handleChoice(false)} color="primary"> SIM </Button>
-                <Button onClick={() => this.handleChoice(true)} color="primary" autoFocus> NÃO </Button>
+                <Button onClick={() => this.handleChoice(true)} color="primary"> SIM </Button>
+                <Button onClick={() => this.handleChoice(false)} color="primary" autoFocus> NÃO </Button>
               </DialogActions>
           </Dialog>
         </>

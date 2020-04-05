@@ -15,7 +15,7 @@ export default class Login extends React.Component{
     super(props);
     this.state = {
         data: [],
-        email: '', 
+        email: '',
         password: '',
     }
   }
@@ -37,7 +37,7 @@ export default class Login extends React.Component{
     return (
       <div style={{margin: 4}}>
         <h2>Seja sempre bem-vindo!</h2>
-        
+
         <form onSubmit={() => {this.onClickSubmit(event)}}>
           <div style={{display: 'inline-block', margin: 10}}>
             <Grid container spacing={4} alignItems="flex-end">
@@ -80,9 +80,9 @@ export default class Login extends React.Component{
           </div>
         </form><br />
 
-        
+
         <RouterButton mainApp={this.props.mainApp} txt={"Ainda não possui uma conta?"} page={Register} />
-        <AppButton onClick={() => this.props.setAuth(!this.props.auth)}>Toogle Auth</AppButton>
+        <AppButton onClick={() => this.props.mainApp.setAuth(!this.props.auth)}>Toogle Auth</AppButton>
       </div>
     )
   }
