@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 // import DialogContentText from '@material-ui/core/DialogContentText';
-import AppBar from './components/AppBar/app-bar';
+import AppBar from './components/AppBar/appbar';
 import Welcome from './components/welcome';
 import Login from './components/Login/login';
 
@@ -16,7 +16,14 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             currentPage: Login,
-            auth: true
+            userdata: {
+              auth: true,
+              name: 'Igor',
+              birthdata: {dia: 17, mes: 12, ano: 2000, idade: 19},
+              avatar: 'http://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2017/03/Avatar.jpg',
+              exp: null,
+              email: 'igortelheiro@hotmail.com',
+            }
         }
 
         this.routePage = this.routePage.bind(this)
@@ -41,6 +48,7 @@ export default class App extends React.Component {
 
     render() {
         const CurrentPage = this.state.currentPage
+        const Userdata = this.state.userdata
 
         return (
             <div>
@@ -48,8 +56,8 @@ export default class App extends React.Component {
                     <DialogTitle style={{padding: 0}}>
                         <AppBar
                             mainApp={this}
-                            cPage={this.state.currentPage}
-                            auth={this.state.auth}
+                            cPage={CurrentPage}
+                            userdata={Userdata}
                         />
                     </DialogTitle>
 
@@ -58,7 +66,7 @@ export default class App extends React.Component {
                             <Route component={() =>
                                 <CurrentPage
                                     mainApp={this}
-                                    auth={this.state.auth}
+                                    userdata={Userdata}
                                 />}
                             />
                         </Router>

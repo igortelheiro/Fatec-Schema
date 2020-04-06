@@ -8,10 +8,12 @@ import DialogActions from '@material-ui/core/DialogActions'
 import Typography from '@material-ui/core/Typography'
 import { DialogContentText } from '@material-ui/core'
 
+// <MsgDialog title={} msg={} handleClose={} />
+
 export default class MsgDialog extends React.Component {
     constructor(props){
         super(props)
-    
+
         this.state = {
             openDialog: true,
             dialog: this.props
@@ -36,7 +38,7 @@ export default class MsgDialog extends React.Component {
                 <DialogContent dividers>
                     <Typography gutterBottom component='span'>
                         <DialogContentText>
-                            { dialog.message }
+                            { dialog.msg }
                         </DialogContentText>
                     </Typography>
                 </DialogContent>

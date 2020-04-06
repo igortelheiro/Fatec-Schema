@@ -9,7 +9,8 @@ import Divider from '@material-ui/core/Divider';
 import MenuButton from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import LoginIcon from '@material-ui/icons/LockOpen'
-import GameIcon from '@material-ui/icons/PlayArrow';
+// import GameIcon from '@material-ui/icons/PlayArrow';
+import RulesIcon from '@material-ui/icons/Gavel';
 import RankIcon from '@material-ui/icons/SupervisorAccount';
 import InfoIcon from '@material-ui/icons/Info';
 import ConfigIcon from '@material-ui/icons/Settings';
@@ -27,13 +28,14 @@ import ConfDialog from '../Tools/confDialog'
 export default function AppMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [ExitDialog, setExitDialog] = React.useState(null)
-  const { auth, cPage } = props
+  const { cPage, userdata } = props
+  const auth = userdata.auth
 
-  function handleClick(event) {
+  function handleMenuOpen(event) {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleClose() {
+  function handleMenuClose() {
     setAnchorEl(null);
   }
 
@@ -50,7 +52,7 @@ export default function AppMenu(props) {
 
   function handleClickOpt(page){
     routePage(page)
-    handleClose()
+    handleMenuClose()
   }
 
   function handleExit() {
@@ -77,7 +79,7 @@ export default function AppMenu(props) {
     <div>
       <Tooltip title="Menu principal" arrow>
           <IconButton color="inherit" size="small" style={ appButton  }
-              onClick={handleClick}
+              onClick={handleMenuOpen}
               >
               <MenuButton width="28"/>
           </IconButton>
@@ -88,11 +90,11 @@ export default function AppMenu(props) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={handleMenuClose}
       >
         <MenuItem onClick={() => {handleClickOpt(Welcome)}}> <HomeIcon style={ menuIcon }/> Bem-Vindo </MenuItem>
         {!auth && <MenuItem onClick={() => {handleClickOpt(Login)}}> <LoginIcon style={ menuIcon }/> Login </MenuItem>}
-        <MenuItem onClick={() => {handleClickOpt(Rules)}}> <GameIcon style={ menuIcon }/> O Jogo </MenuItem>
+        <MenuItem onClick={() => {handleClickOpt(Rules)}}> <RulesIcon style={ menuIcon }/> O Jogo </MenuItem>
         <MenuItem onClick={() => {handleClickOpt(Ranking)}}> <RankIcon style={ menuIcon }/> Ranking </MenuItem>
         <Divider />
         <MenuItem onClick={() => {handleClickOpt(About)}}> <InfoIcon style={ menuIcon }/> Sobre... </MenuItem>

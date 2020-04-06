@@ -1,36 +1,18 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Avatar from '@material-ui/core/Avatar'
-import Divider from '@material-ui/core/Divider'
+import React, { useState } from 'react';
 
-export default class Profile extends React.Component{
-  constructor(props){
-    super(props)
+export default function Profile(props) {
+  const { mainApp, userdata } = props
 
-    this.state = {
-      userData: {
-        avatar: 'http://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2017/03/Avatar.jpg',
-        name: null,
-        birthData: null,
-        exp: null,
-		    email: null,
-		    auth: this.props.mainApp.state.logged
-      }
-    }
-  }
+  return (
+    <>
+      <div className="card">
+        <img className="card" src={userdata.avatar} alt="user avatar" />
+        <div className="container">
+          <h4><b> {userdata.name}, {userdata.birthdata.idade} </b></h4>
+          <p> {userdata.email} </p>
+        </div>
 
-  render(){
-    const userData = this.state.userData
-
-    return (
-            <div className="card">
-              <img src={userData.avatar} alt="user avatar" />
-              <div className="container">
-                <h4><b>User Name</b></h4>
-                <p>Architect & Engineer</p>
-              </div>
-
-            </div>
-    )
-  }
+      </div>
+    </>
+  );
 }

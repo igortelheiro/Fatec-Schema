@@ -42,14 +42,14 @@ export default class Register extends React.Component{
   onClickSubmit = e => {
     //Prevent from refreshing the page
     e.preventDefault()
-    
+
     //Get User´s Age Data
     const validName = this.isNameValid()
     const validEmail = this.isEmailValid()
     const validAge = this.isAgeValid()
     const validGender = this.isGenderChecked()
     const validPassW = this.isPasswordValid()
-    
+
     if (validName && validEmail && validAge && validGender && validPassW) {
       //Send Data
       this.state.data.push({ user: {
@@ -78,7 +78,7 @@ export default class Register extends React.Component{
             //Handle Fields Filling
             onTextChange = e => {
               // SetState com nome dinamico
-              
+
               const {id, value} = e.target
               this.setState({[id]: value})
             }
@@ -90,7 +90,7 @@ export default class Register extends React.Component{
 
             //Handle Gender Select      TODO: MIX WITH ONTEXTCHANGE
             onGenderSelect = opt => {
-              
+
               let value = opt.target.value
               this.setState({ gender: value })
             }
@@ -98,7 +98,7 @@ export default class Register extends React.Component{
 
   //Recieve´s the choosen date and create´s an object with estructured data
   renderBirthDate = () => {
-    
+
     let birthDate = moment(this.state.birthday)
 
     let birthData = {
@@ -117,8 +117,8 @@ export default class Register extends React.Component{
         age = age - 1
       }
       return age
-    }; 
-    
+    };
+
     //Add User Age to birthData
     let userAge = calcAge()
     birthData.idade = userAge
@@ -201,7 +201,7 @@ export default class Register extends React.Component{
               const passW = this.state.password
               const passWCheck = this.state.passwordcheck
               const validPassW = /^[A-Za-z]\w{7,15}$/
-              
+
               if (passW.match(validPassW)) {
                 if (passW === passWCheck) return passW
                 else {
@@ -220,7 +220,7 @@ export default class Register extends React.Component{
   //Open Error Dialog
   onError = (title, description) => {
     this.endError = this.setState({ error: null })
-    this.setState({ error: <MsgDialog title={title} message={description} handleClose={endError}/> })
+    this.setState({ error: <MsgDialog title={title} msg={description} handleClose={endError}/> })
   }
 
   render(){
@@ -232,7 +232,7 @@ export default class Register extends React.Component{
           <div style={{display: 'inline', margin: 15}}>
 
 
-            
+
             <Grid container spacing={6} direction='row' justify='flex-start' alignItems='center'>
               {/* USERNAME FIELD */}
               <Grid item xs={1}>
@@ -263,7 +263,7 @@ export default class Register extends React.Component{
             </Grid>
 
 
-            
+
             <Grid container spacing={6} direction='row' justify='flex-start' alignItems='center'>
               {/* BIRTHDAY FIELD */}
               <Grid item xs={1}>
@@ -279,23 +279,23 @@ export default class Register extends React.Component{
                     helperText='Idade mínima 8 anos'
                     id="birthday"
                     openTo="year"
-                    format="dd/MM/yyyy" 
+                    format="dd/MM/yyyy"
                     label="data de nascimento"
                     views={["year", "month", "date"]}
                     value={this.state.birthday}
                     onChange={date => this.onDateChange(date)}
                     //shouldDisableDate={() => this.disableInvalidDate()}
-                    //error={this.isAgeValid ? {} : 'Você não possui idade suficiente para este serviço!'} 
+                    //error={this.isAgeValid ? {} : 'Você não possui idade suficiente para este serviço!'}
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
-            
+
 
               {/* GENDER SELECT FIELD */}
               <Grid item xs={1}>
                 <Gender />
               </Grid>
-              <Grid item xs={4}>           
+              <Grid item xs={4}>
                   <Select
                     style={{paddingTop:16, width: 195}}
                     displayEmpty
@@ -314,7 +314,7 @@ export default class Register extends React.Component{
             </Grid>
 
 
-            
+
             <Grid container spacing={6} direction='row' justify='flex-start' alignItems='center'>
               {/* PASSWORD FIELD */}
               <Grid item xs={1}>
@@ -329,7 +329,7 @@ export default class Register extends React.Component{
                   //trailingicon={<i className='material-icons'>visibility</i>}   {{{{{{{TODO}}}}}}}
                 />
               </Grid>
-                     
+
 
               {/* CONFIRM PASSWORD FIELD */}
               <Grid item xs={1}>
@@ -359,7 +359,7 @@ export default class Register extends React.Component{
 
         {/* OPEN ERROR DIALOG */}
         <div>{ this.state.error }</div>
-        
+
         <br />
 
         <RouterButton mainApp={this.props.mainApp} txt={"Já possui uma conta?"} page={Login} />

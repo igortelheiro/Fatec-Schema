@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-// import { Container } from './styles';
+// <ConfDialog title="" msg="" setChoice={} handleClose={} />
 
 export default class ConfDialog extends Component {
     constructor(props) {
