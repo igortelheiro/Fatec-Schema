@@ -23,6 +23,7 @@ import ConfDialog from '../Tools/confDialog'
 import Welcome from '../welcome'
 import Game from '../game'
 import Config from '../app-config'
+import Userdata from '../userdata'
 
 // Captura janela principal do Electron
 const { remote } = require('electron')
@@ -42,16 +43,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AppBar(props) {
-  const {mainApp, cPage, userdata} = props
-  const [auth, setAuth] = useState(userdata.auth)
+  const {mainApp, cPage, auth} = props
   const [maximizeIcon, setMaximizeIcon] = useState(<CropSquare/>)
   const [anchorEl, setAnchorEl] = useState(null)
   const [userMenu, setUserMenu] = useState(false)
   const [confDialog, setConfDialog] = useState(null)
 
-  useEffect(() => {
-    setAuth(userdata.auth)
-  }, [userdata.auth])
+  // Atualiza o status de Auth
+  useEffect(() => {}, [auth])
 
   // Evento de click no botao [Maximize]
   const maximizeButton = () => {
@@ -73,48 +72,47 @@ export default function AppBar(props) {
   }, [])
 
   //USER MENU
-        const handleMenu = (event) => {
+        const handleMenuOpen = (event) => {
           setAnchorEl( event.currentTarget )
           setUserMenu( true )
         }
 
-        const handleClose = () => {
+        const handleMenuClose = () => {
           setAnchorEl( null )
           setUserMenu( false )
         }
 
-        const handleChoice = (page) => {
-          handleClose()
+        const handleMenuChoice = (page) => {
+          handleMenuClose()
           routePage(page)
         }
 
   const routePage = (page) => {
-  mainApp.routePage(page)
+    mainApp.routePage(page)
   }
 
   const handleLoggout = () => {
-    const choice = (bool) => { mainApp.setAuth(!bool) }
-    const handleClose = () => setConfDialog( null )
+    function choice(bool) { mainApp.setAuth(!bool) }
+    function handleDialogClose() { setConfDialog( null ) }
     setConfDialog(
         <ConfDialog
           title="Loggout"
           msg="Tem certeza que deseja sair?"
           setChoice={choice}
-          handleClose={handleClose}
+          handleClose={handleDialogClose}
         />
     )
-    handleClose()
   }
 
   const handleExit = () => {
     const choice = (bool) => {if(bool) window.close()}
-    const handleClose = () => setConfDialog( null )
+    const handleDialogClose = () => setConfDialog( null )
     setConfDialog(
       <ConfDialog
         title="Fechar aplicativo"
         msg="Tem certeza que deseja sair?"
         setChoice={choice}
-        handleClose={handleClose}
+        handleClose={handleDialogClose}
       />
     )
   }
@@ -154,7 +152,7 @@ export default function AppBar(props) {
       <AppMenu
         mainApp={mainApp}
         cPage={cPage}
-        userdata={userdata}
+        auth={auth}
       />
 
       <Divider orientation="vertical" />
@@ -185,11 +183,11 @@ export default function AppBar(props) {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={(e) => handleMenu(e)}
+              onClick={(e) => handleMenuOpen(e)}
               color="inherit"
               size="small"
             >
-              <Avatar className={avatar_style.small} src={userdata.avatar} alt="user avatar" />
+              <Avatar className={avatar_style.small} src={Userdata.avatar} alt="user avatar" />
                 {/* <AccountCircle /> */}
             </IconButton>
           </Tooltip>
@@ -206,10 +204,10 @@ export default function AppBar(props) {
             horizontal: 'right',
             }}
             open={userMenu}
-            onClose={() => handleClose()}
+            onClose={() => handleMenuClose()}
           >
-            <MenuItem onClick={() => handleChoice(Profile)}> <ProfileIcon style={menuIcon}/> Perfil </MenuItem>
-            <MenuItem onClick={() => handleChoice(Config)}> <ConfigIcon style={menuIcon}/> Config </MenuItem>
+            <MenuItem onClick={() => handleMenuChoice(Profile)}> <ProfileIcon style={menuIcon}/> Perfil </MenuItem>
+            <MenuItem onClick={() => handleMenuChoice(Config)}> <ConfigIcon style={menuIcon}/> Config </MenuItem>
             <MenuItem onClick={() => handleLoggout()}> <ExitIcon style={menuIcon}/> Loggout </MenuItem>
           </Menu>
         </div>

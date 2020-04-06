@@ -28,8 +28,7 @@ import ConfDialog from '../Tools/confDialog'
 export default function AppMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [ExitDialog, setExitDialog] = React.useState(null)
-  const { cPage, userdata } = props
-  const auth = userdata.auth
+  const { mainApp, cPage, auth } = props
 
   function handleMenuOpen(event) {
     setAnchorEl(event.currentTarget);
@@ -47,7 +46,7 @@ export default function AppMenu(props) {
   }, [auth, cPage])
 
   function routePage(page) {
-    props.mainApp.routePage(page)
+    mainApp.routePage(page)
   }
 
   function handleClickOpt(page){

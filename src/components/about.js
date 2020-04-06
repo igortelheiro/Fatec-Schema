@@ -9,16 +9,16 @@ export default class About extends React.Component {
         dialog: null,
     }
   }
-  
+
   openDialog = (title, message) => {
-    this.setState({ dialog: <MsgDialog title={title} message={message} changeStatus={this.closeDialog} /> })
+    this.setState({ dialog: <MsgDialog title={title} msg={message} changeStatus={this.closeDialog} /> })
   }
   closeDialog = () => {
     this.setState({ dialog: null })
   }
 
   render() {
-    
+
     const appName = require('../../package.json').name
     const appDescription = require('../../package.json').description
     const appVersion = require('../../package.json').version
@@ -30,7 +30,7 @@ export default class About extends React.Component {
     }
 
     const licenseTitle = "MIT License"
-    const licenseMessage = 
+    const licenseMessage =
       <span>
         Copyright (c) 2019
         <br /><br />
@@ -44,9 +44,9 @@ export default class About extends React.Component {
         The above copyright notice and this permission notice shall be included in all
         copies or substantial portions of the Software."
       </span>
-    
+
     return (
-      <div>
+      <div className="disable-select">
         <h2>Conheça-nos</h2>
         <b>Desenvolvido por alunos da Fatec Rubens Lara.</b><br/><br/>
 

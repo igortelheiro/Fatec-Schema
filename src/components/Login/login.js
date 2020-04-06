@@ -21,10 +21,11 @@ export default class Login extends React.Component{
   }
 
   onClickSubmit = (e) => {
+    let state = this.state
     e.preventDefault();
-    this.state.data.push( [this.state.email, this.state.password] )
+    state.data.push( [state.email, state.password] )
     this.setState({email: '', password: ''})
-    console.log(this.state.data)
+    console.log(state.data)
   }
 
   onTextChange = (e) => {
@@ -34,9 +35,11 @@ export default class Login extends React.Component{
   }
 
   render(){
+    const {mainApp, auth} = this.props
+
     return (
-      <div style={{margin: 4}}>
-        <h2>Seja sempre bem-vindo!</h2>
+      <div className="disable-select" style={{margin: 4}}>
+        <h2> Seja sempre bem-vindo! </h2>
 
         <form onSubmit={() => {this.onClickSubmit(event)}}>
           <div style={{display: 'inline-block', margin: 10}}>
@@ -81,8 +84,8 @@ export default class Login extends React.Component{
         </form><br />
 
 
-        <RouterButton mainApp={this.props.mainApp} txt={"Ainda não possui uma conta?"} page={Register} />
-        <AppButton onClick={() => this.props.mainApp.setAuth(!this.props.auth)}>Toogle Auth</AppButton>
+        <RouterButton mainApp={mainApp} txt={"Ainda não possui uma conta?"} page={Register} />
+        <AppButton onClick={() => mainApp.setAuth(!auth)}>Toogle Auth</AppButton>
       </div>
     )
   }

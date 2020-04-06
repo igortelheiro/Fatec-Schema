@@ -31,7 +31,12 @@ export default class MsgDialog extends React.Component {
         const { openDialog, dialog } = this.state
 
         return (
-            <Dialog onClose={() => this.closeDialog()} aria-labelledby="title" open={openDialog}>
+            <Dialog
+              className="disable-select"
+              onClose={() => this.closeDialog()}
+              aria-labelledby="title"
+              open={openDialog}
+            >
                 <DialogTitle  id='title' onClose={() => !this.closeDialog()}>
                     { dialog.title }
                 </DialogTitle>

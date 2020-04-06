@@ -26,7 +26,6 @@ export default class ConfDialog extends Component {
 
     handleChoice = (bool) => {
       this.props.setChoice(bool)
-      this.props.handleClose()
       this.handleClose()
     }
 
@@ -41,25 +40,24 @@ export default class ConfDialog extends Component {
     }
 
     return (
-        <>
-          <Dialog
-            open={this.state.openDialog}
-            onClose={this.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-              <DialogTitle style={title_css} id="alert-dialog-title">{dialog.title}</DialogTitle>
-              <Divider />
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">{dialog.msg}</DialogContentText>
-              </DialogContent>
-              <Divider />
-              <DialogActions>
-                <Button onClick={() => this.handleChoice(true)} color="primary"> SIM </Button>
-                <Button onClick={() => this.handleChoice(false)} color="primary" autoFocus> NÃO </Button>
-              </DialogActions>
-          </Dialog>
-        </>
+      <Dialog
+        className="disable-select"
+        open={this.state.openDialog}
+        onClose={this.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+          <DialogTitle style={title_css} id="alert-dialog-title">{dialog.title}</DialogTitle>
+          <Divider />
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">{dialog.msg}</DialogContentText>
+          </DialogContent>
+          <Divider />
+          <DialogActions>
+            <Button onClick={() => this.handleChoice(true)} color="primary"> SIM </Button>
+            <Button onClick={() => this.handleChoice(false)} color="primary" autoFocus> NÃO </Button>
+          </DialogActions>
+      </Dialog>
     )
   }
 }

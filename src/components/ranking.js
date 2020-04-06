@@ -8,8 +8,8 @@ export default class Ranking extends React.Component{
     }
 
     render(){
-        return ( 
-            <div>
+        return (
+            <div className="disable-select">
                 Ranking
              </div>
         )

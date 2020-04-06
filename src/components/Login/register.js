@@ -12,6 +12,8 @@ import MsgDialog from '../Tools/msgDialog'
 import Filter from 'bad-words'
 import RouterButton from '../Tools/routerButton'
 import Badwords from './badwords'
+import HelperText from '@material-ui/core/FormHelperText';
+
 
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Email from '@material-ui/icons/Mail'
@@ -43,7 +45,7 @@ export default class Register extends React.Component{
     //Prevent from refreshing the page
     e.preventDefault()
 
-    //Get User´s Age Data
+    //Validate every field before pushing to data
     const validName = this.isNameValid()
     const validEmail = this.isEmailValid()
     const validAge = this.isAgeValid()
@@ -78,7 +80,6 @@ export default class Register extends React.Component{
             //Handle Fields Filling
             onTextChange = e => {
               // SetState com nome dinamico
-
               const {id, value} = e.target
               this.setState({[id]: value})
             }
@@ -217,15 +218,15 @@ export default class Register extends React.Component{
               }
             }
 
-  //Open Error Dialog
+  //Handle Error Dialog
   onError = (title, description) => {
-    this.endError = this.setState({ error: null })
+    const endError = () => { this.setState({ error: null }) }
     this.setState({ error: <MsgDialog title={title} msg={description} handleClose={endError}/> })
   }
 
   render(){
     return (
-      <div id='registerField' style={{margin: 4}}>
+      <div className="disable-select" style={{margin: 4}}>
         <h2>Está na hora de por você no jogo!</h2>
 
         <form onSubmit={() => {this.onClickSubmit(event)}}>
@@ -236,6 +237,7 @@ export default class Register extends React.Component{
             <Grid container spacing={6} direction='row' justify='flex-start' alignItems='center'>
               {/* USERNAME FIELD */}
               <Grid item xs={1}>
+
                 <AccountCircle />
               </Grid>
               <Grid item xs={4}>
@@ -251,6 +253,7 @@ export default class Register extends React.Component{
 
               {/* EMAIL FIELD */}
               <Grid item xs={1}>
+
                 <Email />
               </Grid>
               <Grid item xs={4}>
@@ -258,6 +261,7 @@ export default class Register extends React.Component{
                   required
                   id="email" value={this.state.email}
                   label="email" onChange={() => this.onTextChange(event)}
+                  helperText="exemplo@exemplo.com"
                 />
               </Grid>
             </Grid>
@@ -267,6 +271,7 @@ export default class Register extends React.Component{
             <Grid container spacing={6} direction='row' justify='flex-start' alignItems='center'>
               {/* BIRTHDAY FIELD */}
               <Grid item xs={1}>
+
                 <Cake />
               </Grid>
               <Grid item xs={4}>
@@ -284,8 +289,6 @@ export default class Register extends React.Component{
                     views={["year", "month", "date"]}
                     value={this.state.birthday}
                     onChange={date => this.onDateChange(date)}
-                    //shouldDisableDate={() => this.disableInvalidDate()}
-                    //error={this.isAgeValid ? {} : 'Você não possui idade suficiente para este serviço!'}
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
@@ -295,6 +298,7 @@ export default class Register extends React.Component{
               <Grid item xs={1}>
                 <Gender />
               </Grid>
+
               <Grid item xs={4}>
                   <Select
                     style={{paddingTop:16, width: 195}}
@@ -310,6 +314,7 @@ export default class Register extends React.Component{
                     <MenuItem value={'O'}>Outro</MenuItem>
                     <MenuItem value={'ND'}>Prefiro não informar</MenuItem>
                   </Select>
+                  <HelperText>Tudo bem se não quiser</HelperText>
               </Grid>
             </Grid>
 
@@ -320,6 +325,7 @@ export default class Register extends React.Component{
               <Grid item xs={1}>
                 <Lock />
               </Grid>
+
               <Grid item xs={4}>
                 <TextField
                   required
@@ -335,6 +341,7 @@ export default class Register extends React.Component{
               <Grid item xs={1}>
                 <Lock />
               </Grid>
+
               <Grid item xs={4}>
                 <TextField
                   required

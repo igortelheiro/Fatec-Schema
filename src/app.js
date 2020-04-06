@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import AppBar from './components/AppBar/appbar';
 import Welcome from './components/welcome';
 import Login from './components/Login/login';
+import Userdata from './components/userdata'
 
 const fs = require('fs')
 const fName = "./schema.ini"
@@ -16,25 +17,17 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             currentPage: Login,
-            userdata: {
-              auth: true,
-              name: 'Igor',
-              birthdata: {dia: 17, mes: 12, ano: 2000, idade: 19},
-              avatar: 'http://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2017/03/Avatar.jpg',
-              exp: null,
-              email: 'igortelheiro@hotmail.com',
-            }
+            auth: true
         }
 
         this.routePage = this.routePage.bind(this)
         this.setAuth = this.setAuth.bind(this)
 
         fs.exists(fName, (exists) => {
-            if (!exists){
-                this.setState({ currentPage: Welcome })
-                fs.writeFileSync(fName, "[files checked]")
-                console.log(fName + " criado com sucesso!")
-            }
+          if (!exists){
+            this.routePage( Welcome )
+            fs.writeFileSync(fName, "[files checked]")
+          }
         });
     }
 
@@ -43,35 +36,35 @@ export default class App extends React.Component {
     }
 
     setAuth = (bool) => {
-        this.setState({ auth: bool })
+      this.setState({ auth: bool })
     }
 
     render() {
         const CurrentPage = this.state.currentPage
-        const Userdata = this.state.userdata
+        const {auth} = this.state
 
         return (
             <div>
-                <Dialog fullScreen={Boolean("true")} open={Boolean("true")}>
-                    <DialogTitle style={{padding: 0}}>
-                        <AppBar
-                            mainApp={this}
-                            cPage={CurrentPage}
-                            userdata={Userdata}
-                        />
-                    </DialogTitle>
+              <Dialog fullScreen={Boolean("true")} open={Boolean("true")}>
+                  <DialogTitle style={{padding: 0}}>
+                      <AppBar
+                        mainApp={this}
+                        cPage={CurrentPage}
+                        auth={auth}
+                      />
+                  </DialogTitle>
 
-                    <DialogContent className={'mainContent'}>
-                        <Router>
-                            <Route component={() =>
-                                <CurrentPage
-                                    mainApp={this}
-                                    userdata={Userdata}
-                                />}
-                            />
-                        </Router>
-                    </DialogContent>
-                </Dialog>
+                  <DialogContent className={'mainContent'}>
+                      <Router>
+                          <Route component={() =>
+                              <CurrentPage
+                                mainApp={this}
+                                auth={auth}
+                              />}
+                          />
+                      </Router>
+                  </DialogContent>
+              </Dialog>
             </div>
         );
     }
