@@ -72,19 +72,29 @@ export default function AppBar(props) {
   }, [])
 
   //USER MENU
-        const handleMenuOpen = (event) => {
-          setAnchorEl( event.currentTarget )
-          setUserMenu( true )
-        }
-
-        const handleMenuClose = () => {
-          setAnchorEl( null )
-          setUserMenu( false )
-        }
-
-        const handleMenuChoice = (page) => {
-          handleMenuClose()
-          routePage(page)
+        const [action, setAction] = useState(null)
+        const handleMenu = {
+          Open: function(event) {
+            setAnchorEl( event.currentTarget )
+            setUserMenu( true )
+          },
+          Close: function() {
+            setAnchorEl( null )
+            setUserMenu( false )
+          },
+          Choice: function(page) {
+            this.Close()
+            routePage(page)
+          },
+          /*Hold: {
+            Start: function() {
+              let _action = setInterval(function() { routePage(Profile) }, 100)
+              setAction( _action )
+            },
+            End: function() {
+              clearInterval(action)
+            }
+          }*/
         }
 
   const routePage = (page) => {
@@ -183,7 +193,7 @@ export default function AppBar(props) {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={(e) => handleMenuOpen(e)}
+              onClick={(e) => handleMenu.Open(e)}
               color="inherit"
               size="small"
             >
@@ -204,10 +214,10 @@ export default function AppBar(props) {
             horizontal: 'right',
             }}
             open={userMenu}
-            onClose={() => handleMenuClose()}
+            onClose={() => handleMenu.Close()}
           >
-            <MenuItem onClick={() => handleMenuChoice(Profile)}> <ProfileIcon style={menuIcon}/> Perfil </MenuItem>
-            <MenuItem onClick={() => handleMenuChoice(Config)}> <ConfigIcon style={menuIcon}/> Config </MenuItem>
+            <MenuItem onClick={() => handleMenu.Choice(Profile)}> <ProfileIcon style={menuIcon}/> Perfil </MenuItem>
+            <MenuItem onClick={() => handleMenu.Choice(Config)}> <ConfigIcon style={menuIcon}/> Config </MenuItem>
             <MenuItem onClick={() => handleLoggout()}> <ExitIcon style={menuIcon}/> Loggout </MenuItem>
           </Menu>
         </div>
