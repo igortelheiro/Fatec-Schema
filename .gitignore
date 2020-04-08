@@ -10,5 +10,5 @@ dist/
 # WebStorm Project Folder
 .idea
 
-# Jest Snapshot Folder
-**/__snapshots__/
+# First entry check file
+schema.ini

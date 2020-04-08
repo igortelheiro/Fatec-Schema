@@ -102,7 +102,13 @@ export default function AppBar(props) {
   }
 
   const handleLoggout = () => {
-    function choice(bool) { mainApp.setAuth(!bool) }
+    function choice(bool) {
+      // Se "SIM", fechar User Menu
+      if (bool === true) {
+        mainApp.setAuth(!bool)
+        handleMenu.Close()
+      }
+    }
     function handleDialogClose() { setConfDialog( null ) }
     setConfDialog(
         <ConfDialog

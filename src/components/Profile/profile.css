@@ -17,11 +17,15 @@ img.avatar_card {
   border-radius: 5px 5px 0 0;
 }
 
-h4.txt_card, p.txt_card {
-  margin: 10px 2px 14px 2px;
+.txt_card {
+  display: inline;
 }
 
 /* Add some padding inside the card container */
 .container {
   padding: 2px 16px;
+}
+
+.card_icon {
+  margin-right: 2px;
 }
