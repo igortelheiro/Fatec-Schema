@@ -12,3 +12,8 @@ dist/
 
 # First entry check file
 schema.ini
+
+.vscode/
+
+sample_rest/
+
